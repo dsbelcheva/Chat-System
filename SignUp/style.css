@@ -41,11 +41,13 @@ body {
 .signUp-wrapper #signUp_form {
     margin-top: 60px;
 }
-input[type=email], 
-input[type=password] { 
-    padding: 12px 38px; 
-    margin: 8px 0px; 
-} 
+
+input[type=email],
+input[type=password] {
+    padding: 12px 38px;
+    margin: 8px 0px;
+}
+
 .signUp-wrapper input {
     border-radius: 15px;
     border: 2px solid white;

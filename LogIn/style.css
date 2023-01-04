@@ -1,0 +1,128 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    /*background-color: #ffcccc;*/
+    background-image: url(Background.jpg);
+    display: flex;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+}
+
+.logIn-wrapper {
+    margin-top: 200px;
+    background-image: linear-gradient(#cc99ff, #ff99cc);
+    max-width: 25rem;
+    max-height: 55vh;
+    width: 100%;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 20px 20px 50px 15px black;
+}
+
+::placeholder {
+    color: white;
+}
+
+.logIn-wrapper .title {
+    font-size: 38px;
+    text-align: center;
+    margin: 0px;
+    color: white;
+}
+
+.logIn-wrapper #logIn_form {
+    margin-top: 120px;
+}
+
+input[type=email],
+input[type=password] {
+    padding: 12px 38px;
+    margin: 8px 0px;
+}
+
+.logIn-wrapper input {
+    border-radius: 15px;
+    border: 2px solid white;
+    width: 100%;
+    background-color: #ffccff;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.fontemail,
+.fontpassword {
+    position: relative;
+}
+
+.fontemail i,
+.fontpassword i {
+    position: absolute;
+    left: 8px;
+    top: 17px;
+    color: grey;
+}
+
+.logIn-wrapper .forLoginOrSignUp {
+    display: flex;
+    margin-top: 40px;
+    flex-direction: column;
+}
+
+.logIn-wrapper #submitLogin {
+    border: none;
+    max-width: 20rem;
+    height: 3rem;
+    padding: 5px 30px;
+    border-radius: 15px;
+    background-color: white;
+    color: #ff99cc;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.logIn-wrapper #submitLogin:hover {
+    background-color: black;
+    color: white;
+}
+
+.logIn-wrapper a {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    margin-top: 15px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.logIn-wrapper a:hover {
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+@media all and (max-width:400px) {
+
+    .logIn-wrapper {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .logIn-wrapper input {
+        background-color: transparent;
+    }
+
+    ::placeholder {
+        color: white;
+    }
+}
