@@ -32,7 +32,14 @@ submit.addEventListener("click", (event) => {
         clearFields();
     }
     else {
-        createUserWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            if (userCredential) {
+                var mail = email.split('@');
+                window.localStorage.setItem("username", mail[0]);
+                window.localStorage.setItem("currentChat", "General");
+                window.localStorage.setItem("GeneralChatIsOpen", true);
+            }
+        })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;

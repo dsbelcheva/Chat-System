@@ -22,10 +22,6 @@ submit.addEventListener("click", (event) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
         if (userCredential) {
-            var mail = email.split('@');
-            window.localStorage.setItem("username", mail[0]);
-            window.localStorage.setItem("currentChat", "General");
-            window.localStorage.setItem("GeneralChatIsOpen", true);
             window.location.replace("/ChatRooms/index.html");
         }
     })
