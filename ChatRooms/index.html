@@ -31,7 +31,7 @@
                           <p class="username">Lili</p>
                           <p>Date/Time: </p>
                           <p class="text">Hello, I'm new here!</p>
-                          <p class="likes"><i class="fas fa-heart"></i> 0</p>
+                          <p class="likes"><i class="fa fa-heart"></i> 0</p>
                         </li>-->
                     </ul>
                 </section>
@@ -40,6 +40,68 @@
                 </div>
             </article>
         </main>
+        <section id="groups-wrapper" class="hidden">
+            <button id="exit-groups-list" class="exit"><i class="fa fa-times"></i></button>
+            <p class="chats-title">Your chats</p>
+            <nav class="group-chats">
+                <ul id="groups-ul">
+                    <!--<li>
+            <p class="chatName">Lala</p>
+          </li>-->
+                </ul>
+            </nav>
+        </section>
+        <section id="AddnewGroup" class="addChat hidden">
+            <button id="exit-new-group" class="exit"><i class="fa fa-times"></i></button>
+            <div class="create-new-group">
+                <p class="create">Create new group</p>
+                <input id="newGroup" type="text" placeholder="Enter the name of the group" />
+                <button id="submitNewGroup" class="float-right">Create</button>
+            </div>
+            <div class="find-new-group">
+                <p class="find">Find new group</p>
+                <input id="searchGroup" type="text" placeholder="Enter the name of the group" />
+                <button id="searchForGroup" class="float-right">Search</button>
+            </div>
+        </section>
+        <section id="AddNewPerson" class="addPerson hidden">
+            <button id="exit-new-person" class="exit"><i class="fa fa-times"></i></button>
+            <div class="find-person">
+                <p class="find">Add a person to the chat</p>
+                <input id="newPerson" type="text" placeholder="Enter username of the person" />
+                <button id="submitNewPerson" class="float-right">Add</button>
+            </div>
+        </section>
+        <section id="requests-section" class="requests hidden">
+            <button id="exit-requests" class="exit"><i class="fa fa-times"></i></button>
+            <p class="ask-question">Do you want to join this group?</p>
+            <ul id="requests-ul">
+                <!-- <li>
+                    <p id="groupNameFromRequest" class="chatName">Lalala</p>
+                    <div>
+                    <button id="yesButton" value ="Lalala >Yes</button>
+                    <button id="noButton" value= "Lalala">No</button>
+                  </div>
+                  </li>-->
+            </ul>
+        </section>
+        <section id="notification-section" class="hidden">
+            <button id="exit-notifications" class="exit"><i class="fa fa-times"></i></button>
+            <p class="goupList">Unread messages in:</p>
+            <nav class="notifications">
+                <ul id="notificationLists-ul">
+                    <!--<li>
+                  <p class="chatName">Lala</p>
+                </li>-->
+                </ul>
+            </nav>
+        </section>
+        <section id="edit-message-section" class="change-message hidden">
+            <button id="exit-change-message" class="exit"><i class="fa fa-times"></i></button>
+            <p><i class="fa fa-pencil" aria-hidden="true"></i></p>
+            <input type="text" class="editMessage" id="editMessageInput" placeholder="Type new message..." />
+            <button id="submit-edit-message" class="float-right"><i class="fa fa-angle-double-right"></i></button>
+        </section>
     </div>
 </body>
 
