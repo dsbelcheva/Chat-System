@@ -1,0 +1,97 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(Background.jpg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0 0 50px;
+}
+
+.chat-wrapper {
+    background-color: white;
+    max-width: 80rem;
+    height: 90vh;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 20px 20px 50px 15px black;
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: #cc99ff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+}
+
+#AddPeople,
+#LeaveChat {
+    font-size: 40px;
+    border: none;
+    color: white;
+    background-color: Transparent;
+}
+
+#AddPeople {
+    margin-left: 50px;
+}
+
+#LeaveChat {
+    margin-right: 50px;
+}
+
+.functions-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    background-color: #e6ccff;
+}
+
+.functions-header button {
+    color: grey;
+    font-size: 40px;
+    border: none;
+    background-color: Transparent;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sendMessage {
+    background-color: #cc99ff;
+    height: 60px;
+    margin-top: 650px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sendMessage input {
+    border-radius: 12px;
+    border: 1px solid grey;
+    padding-left: 20px;
+    background-color: white;
+    font-size: 20px;
+    height: 80%;
+    width: 80%;
+    margin-top: 5px;
+    margin-left: 120px;
+}
+
+#AddPeople:hover,
+#LeaveChat:hover,
+.groupChatBox button:hover {
+    color: black;
+}

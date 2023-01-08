@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <script type="module" src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="chat-wrapper">
+        <header class="main-header">
+            <button id="AddPeople"><i class="fa fa-user-plus"></i></button>
+            <h1>General Chat</h1>
+            <button id="LeaveChat"><i class="fa fa-sign-out"></i></button>
+        </header>
+        <main>
+            <article class="groupChatBox">
+                <header class="functions-header">
+                    <button id="groups-btn"><i class="fa fa-plus-circle"></i></button>
+                    <button id="inbox-btn"><i class="fa fa-inbox"></i></button>
+                    <button id="requests-btn"><i class="fa fa-comments-o"></i></button>
+                    <button id="notifications-btn"><i class="fa fa-bell"></i></button>
+                </header>
+                <section id="messageBox">
+                    <ul id="messages">
+                        <!--<li class="message">
+                          <p class="username">Lili</p>
+                          <p>Date/Time: </p>
+                          <p class="text">Hello, I'm new here!</p>
+                          <p class="likes"><i class="fas fa-heart"></i> 0</p>
+                        </li>-->
+                    </ul>
+                </section>
+                <div class="sendMessage">
+                    <input id="messageInput" class="newMessage" type="text" placeholder="Message..." />
+                </div>
+            </article>
+        </main>
+    </div>
+</body>
+
+</html>
