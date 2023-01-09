@@ -70,15 +70,51 @@ body {
     padding-bottom: 10px;
 }
 
-.sendMessage {
+main .message {
+    background-color: #d9b3ff;
+    padding: 10px;
+    border-radius: 20px;
+    width: fit-content;
+    color: black;
+    display: flex;
+    font-size: 20px;
+}
+
+main .message .username {
+    color: white;
+    padding-right: 15px;
+}
+
+main .message .date-time,
+.text {
+    padding-right: 15px;
+}
+
+main .message .date-time {
+    font-size: 15px;
+}
+
+.likes {
+    color: white;
+}
+
+.likes i {
+    color: #e6005c;
+}
+
+.likes i:hover {
+    color: grey;
+}
+
+main .sendMessage {
     background-color: #cc99ff;
     height: 60px;
-    margin-top: 650px;
+    margin-top: 550px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.sendMessage input {
+main .sendMessage input {
     border-radius: 12px;
     border: 1px solid grey;
     padding-left: 20px;
@@ -87,7 +123,7 @@ body {
     height: 80%;
     width: 80%;
     margin-top: 5px;
-    margin-left: 120px;
+    margin-left: 105px;
 }
 
 #AddPeople:hover,
@@ -95,3 +131,212 @@ body {
 .groupChatBox button:hover {
     color: black;
 }
+
+ul {
+    list-style: none;
+}
+
+#groups-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 60vh;
+    width: 30%;
+    background-color: #cc99ff;
+    border-radius: 50px;
+    box-shadow: 0px 0px 30px #000000;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#groups-wrapper nav ul {
+    margin: 0px;
+    padding: 5px;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#groups-wrapper .chats-title {
+    overflow: hidden;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0px;
+    padding: 30px;
+}
+
+#groups-wrapper nav li {
+    background-color: #d9b3ff;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+#groups-wrapper nav li .chatName, #notification-section nav li {
+    font-weight: bold;
+    color: grey;
+    font-size: 20px;
+    margin: 10px;
+    overflow: hidden;
+}
+
+#groups-wrapper nav li:hover, #notification-section nav li:hover {
+    background-color: black;
+}
+
+#groups-wrapper nav li p:hover, #notification-section nav li p:hover {
+    color: white;
+}
+
+.exit {
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+}
+
+.exit:hover {
+    color: black;
+}
+
+#AddnewGroup,
+#AddNewPerson,
+#requests-section,
+#notification-section {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 50px;
+    background-color: #cc99ff;
+    max-width: 27rem;
+    width: 80%;
+    border-radius: 50px;
+    box-shadow: 0px 0px 30px #000000;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-new-group,
+.find-new-group,
+.find-person {
+    padding-left: 1.5rem;
+    padding-top: 1rem;
+    padding-right: 1rem;
+}
+
+#AddnewGroup input,
+#AddNewPerson input {
+    width: 80%;
+    padding: 8px 6px;
+    border-radius: 12px;
+    border: none;
+}
+
+#AddnewGroup .create,
+.find,
+.ask-question {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#AddnewGroup .float-right,
+#AddNewPerson .float-right,
+#yesButton,
+#noButton {
+    border-radius: 12px;
+    padding: 8px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#AddnewGroup .float-right:hover,
+#AddNewPerson .float-right:hover,
+#yesButton:hover,
+#noButton:hover {
+    background-color: black;
+    color: white;
+}
+
+#AddnewGroup #exit-new-group {
+    padding-top: 50px;
+}
+
+#AddNewPerson #exit-new-person {
+    padding-top: 30px;
+}
+
+#requests-section, #notification-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#requests-section ul, #notification-section ul {
+    overflow: hidden;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: -10px;
+}
+
+#requests-section li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+    margin: 0px;
+}
+
+#requests-section li p {
+    margin: 0px;
+    padding-right: 10px;
+}
+
+#requests-section ul {
+    max-width: 100%;
+    padding: 10px;
+}
+
+
+#notification-section nav li {
+    background-color: #d9b3ff;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+#notification-section nav li p {
+    margin: 5px;
+    overflow:hidden;
+}
+
+#notification-section .groupList  {
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+#notification-section nav ul {
+    list-style: none;
+    margin: 0px;
+    padding: 5px;
+    max-height: 50vh;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
