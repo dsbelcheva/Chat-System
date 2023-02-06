@@ -19,11 +19,18 @@ body {
 
 .chat-wrapper {
     background-color: white;
+    overflow: hidden;
+    overflow-y: hidden;
     max-width: 80rem;
     height: 90vh;
     width: 100%;
     border-radius: 10px;
     box-shadow: 20px 20px 50px 15px black;
+    position: relative;
+}
+
+.chat-wrapper ul li {
+    margin: 5px;
 }
 
 .main-header {
@@ -112,6 +119,7 @@ main .sendMessage {
     margin-top: 550px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    position: relative;
 }
 
 main .sendMessage input {
@@ -124,6 +132,7 @@ main .sendMessage input {
     width: 80%;
     margin-top: 5px;
     margin-left: 105px;
+    position: absolute;
 }
 
 #AddPeople:hover,
@@ -136,7 +145,8 @@ ul {
     list-style: none;
 }
 
-#groups-wrapper {
+#groups-wrapper,
+#notification-section {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -152,7 +162,8 @@ ul {
     justify-content: space-between;
 }
 
-#groups-wrapper nav ul {
+#groups-wrapper nav ul,
+#notification-section nav ul {
     margin: 0px;
     padding: 5px;
     max-height: 50vh;
@@ -160,7 +171,8 @@ ul {
     overflow-y: scroll;
 }
 
-#groups-wrapper .chats-title {
+#groups-wrapper .chats-title,
+#notification-section .groupList {
     overflow: hidden;
     font-size: 30px;
     font-weight: bold;
@@ -170,14 +182,16 @@ ul {
     padding: 30px;
 }
 
-#groups-wrapper nav li {
+#groups-wrapper nav li,
+#notification-section nav li {
     background-color: #d9b3ff;
     padding: 10px;
     border-radius: 15px;
     margin-bottom: 10px;
 }
 
-#groups-wrapper nav li .chatName, #notification-section nav li {
+#groups-wrapper nav li .chatName,
+#notification-section nav li .chatName {
     font-weight: bold;
     color: grey;
     font-size: 20px;
@@ -185,11 +199,13 @@ ul {
     overflow: hidden;
 }
 
-#groups-wrapper nav li:hover, #notification-section nav li:hover {
+#groups-wrapper nav li:hover,
+#notification-section nav li:hover {
     background-color: black;
 }
 
-#groups-wrapper nav li p:hover, #notification-section nav li p:hover {
+#groups-wrapper nav li p:hover,
+#notification-section nav li p:hover {
     color: white;
 }
 
@@ -207,8 +223,7 @@ ul {
 
 #AddnewGroup,
 #AddNewPerson,
-#requests-section,
-#notification-section {
+#requests-section {
     position: absolute;
     top: 40%;
     left: 50%;
@@ -233,7 +248,8 @@ ul {
 }
 
 #AddnewGroup input,
-#AddNewPerson input {
+#AddNewPerson input,
+#edit-message-section input {
     width: 80%;
     padding: 8px 6px;
     border-radius: 12px;
@@ -264,7 +280,7 @@ ul {
 #AddnewGroup .float-right:hover,
 #AddNewPerson .float-right:hover,
 #yesButton:hover,
-#noButton:hover {
+#noButton:hover, .new-message .float-right:hover {
     background-color: black;
     color: white;
 }
@@ -277,22 +293,25 @@ ul {
     padding-top: 30px;
 }
 
-#requests-section, #notification-section {
-    display: flex;
+#requests-section {
     align-items: center;
     justify-content: space-around;
+    overflow: hidden;
+    max-height: 30vh;
 }
 
-#requests-section ul, #notification-section ul {
+#requests-section ul {
     overflow: hidden;
     font-size: 25px;
     font-weight: bold;
     color: white;
     font-family: Arial, sans-serif;
     margin: 0px;
+    padding-top: 10px;
     padding-bottom: 30px;
     padding-left: 20px;
     padding-right: -10px;
+    overflow-y: scroll;
 }
 
 #requests-section li {
@@ -301,6 +320,7 @@ ul {
     align-items: center;
     background-color: transparent;
     margin: 0px;
+    padding: 5px;
 }
 
 #requests-section li p {
@@ -308,35 +328,63 @@ ul {
     padding-right: 10px;
 }
 
-#requests-section ul {
-    max-width: 100%;
-    padding: 10px;
+#AddnewGroup,
+#AddNewPerson,
+#requests-section,
+#notification-section,
+#groups-wrapper {
+    display: none;
 }
 
-
-#notification-section nav li {
-    background-color: #d9b3ff;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 10px;
+#edit-message-section {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 50px;
+    background-color: #cc99ff;
+    max-width: 22rem;
+    width: 90%;
+    border-radius: 50px;
+    box-shadow: 0px 0px 30px #000000;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 12rem;
 }
-#notification-section nav li p {
-    margin: 5px;
-    overflow:hidden;
+
+#edit-message-section p {
+    font-size: 30px;
+    padding-left: 20px;
+    margin-bottom: -30px;
 }
 
-#notification-section .groupList  {
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
-    font-family: Arial, sans-serif;
+#edit-message-section input {
+    margin-left: 10px;
 }
 
-#notification-section nav ul {
-    list-style: none;
-    margin: 0px;
-    padding: 5px;
-    max-height: 50vh;
-    overflow: hidden;
-    overflow-y: scroll;
-  }
+.new-message .float-right {
+    border-radius: 18px;
+    padding: 8px;
+    border: none;
+    color: black;
+    background-color: transparent;
+}
+
+.new-message .float-right i {
+    font-size: 20px;
+}
+
+@media all and (max-width: 600px){
+    #messageInput{
+      max-width: 80%;
+      height: 40%;
+    }
+    body, main {
+      height: 100vh;
+    }
+    main .sendMessage {
+      height : 20%;
+    }
+}

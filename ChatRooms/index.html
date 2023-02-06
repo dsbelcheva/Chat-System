@@ -28,10 +28,16 @@
                 <section id="messageBox">
                     <ul id="messages">
                         <li class="message">
-                          <p class="username">Lili</p>
-                          <p class="date-time">09.03.2023/8:31:</p>
-                          <p class="text">Hello, I'm new here!</p>
-                          <p class="likes"><i class="fa fa-heart"></i> 0</p>
+                            <p class="username">Lili</p>
+                            <p class="date-time">09.03.2023/8:31:</p>
+                            <p class="text">Hello, I'm new here!</p>
+                            <p class="likes"><i class="fa fa-heart"></i> 0</p>
+                        </li>
+                        <li class="message">
+                            <p class="username">Lili</p>
+                            <p class="date-time">09.03.2023/8:31:</p>
+                            <p class="text">Hello, I'm new here!</p>
+                            <p class="likes"><i class="fa fa-heart"></i> 0</p>
                         </li>
                     </ul>
                 </section>
@@ -45,11 +51,22 @@
             <nav class="group-chats">
                 <ul id="groups-ul">
                     <li>
-            <p class="chatName">Lala</p>
-          </li>
+                        <p class="chatName">Lala</p>
+                    </li>
                 </ul>
             </nav>
             <button id="exit-groups-list" class="exit"><i class="fa fa-times"></i></button>
+        </section>
+        <section id="notification-section" class="hidden">
+            <p class="groupList">Unread messages in:</p>
+            <nav class="notifications">
+                <ul id="notificationLists-ul">
+                    <li>
+                        <p class="chatName">Lala</p>
+                    </li>
+                </ul>
+            </nav>
+            <button id="exit-notifications" class="exit"><i class="fa fa-times"></i></button>
         </section>
         <section id="AddnewGroup" class="addChat hidden">
             <div class="create-new-group">
@@ -75,52 +92,22 @@
         <section id="requests-section" class="requests hidden">
             <p class="ask-question">Do you want to join this group?</p>
             <ul id="requests-ul">
-                 <li>
+                <li>
                     <p id="groupNameFromRequest" class="chatName">Lalala</p>
                     <div>
-                    <button id="yesButton" value ="Lalala">Yes</button>
-                    <button id="noButton" value= "Lalala">No</button>
-                  </div>
-                  </li>
+                        <button id="yesButton" value="Lalala">Yes</button>
+                        <button id="noButton" value="Lalala">No</button>
+                    </div>
+                </li>
             </ul>
             <button id="exit-requests" class="exit"><i class="fa fa-times"></i></button>
         </section>
-        <section id="notification-section" class="hidden">
-            <p class="groupList">Unread messages in:</p>
-            <nav class="notifications">
-                <ul id="notificationLists-ul">
-                    <li>
-                  <p class="chatName">Lala</p>
-                </li>
-                <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                  <li>
-                    <p class="chatName">Lala</p>
-                  </li>
-                </ul>
-            </nav>
-            <button id="exit-notifications" class="exit"><i class="fa fa-times"></i></button>
-        </section>
         <section id="edit-message-section" class="change-message hidden">
-            <p><i class="fa fa-pencil" aria-hidden="true"></i></p>
+            <p><i class="fa fa-pencil"></i></p>
+            <div class="new-message">
             <input type="text" class="editMessage" id="editMessageInput" placeholder="Type new message..." />
             <button id="submit-edit-message" class="float-right"><i class="fa fa-angle-double-right"></i></button>
+          </div>
             <button id="exit-change-message" class="exit"><i class="fa fa-times"></i></button>
         </section>
     </div>
