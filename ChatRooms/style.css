@@ -13,20 +13,18 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 94vh;
     margin: 0 0 50px;
 }
 
 .chat-wrapper {
     background-color: white;
-    overflow: hidden;
-    overflow-y: hidden;
+    margin-top: 50px;
     max-width: 80rem;
-    height: 90vh;
+    height: 84vh;
     width: 100%;
     border-radius: 10px;
     box-shadow: 20px 20px 50px 15px black;
-    position: relative;
 }
 
 .chat-wrapper ul li {
@@ -77,6 +75,13 @@ body {
     padding-bottom: 10px;
 }
 
+main #messageBox {
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    height: 600px;
+}
+
 main .message {
     background-color: #d9b3ff;
     padding: 10px;
@@ -116,10 +121,9 @@ main .message .date-time {
 main .sendMessage {
     background-color: #cc99ff;
     height: 60px;
-    margin-top: 550px;
+    margin-top: 0px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    position: relative;
 }
 
 main .sendMessage input {
@@ -131,8 +135,7 @@ main .sendMessage input {
     height: 80%;
     width: 80%;
     margin-top: 5px;
-    margin-left: 105px;
-    position: absolute;
+    margin-left: 120px;
 }
 
 #AddPeople:hover,
@@ -280,7 +283,8 @@ ul {
 #AddnewGroup .float-right:hover,
 #AddNewPerson .float-right:hover,
 #yesButton:hover,
-#noButton:hover, .new-message .float-right:hover {
+#noButton:hover,
+.new-message .float-right:hover {
     background-color: black;
     color: white;
 }
@@ -328,14 +332,6 @@ ul {
     padding-right: 10px;
 }
 
-#AddnewGroup,
-#AddNewPerson,
-#requests-section,
-#notification-section,
-#groups-wrapper {
-    display: none;
-}
-
 #edit-message-section {
     position: absolute;
     top: 40%;
@@ -364,6 +360,15 @@ ul {
     margin-left: 10px;
 }
 
+#AddnewGroup,
+#AddNewPerson,
+#requests-section,
+#notification-section,
+#groups-wrapper,
+#edit-message-section {
+    display: none;
+}
+
 .new-message .float-right {
     border-radius: 18px;
     padding: 8px;
@@ -376,15 +381,31 @@ ul {
     font-size: 20px;
 }
 
-@media all and (max-width: 600px){
-    #messageInput{
-      max-width: 80%;
-      height: 40%;
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cc99ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media only screen and (max-device-width: 667px),
+screen and (max-width: 450px) {
+
+    body,
+    main {
+        height: 100vh;
     }
-    body, main {
-      height: 100vh;
-    }
+
     main .sendMessage {
-      height : 20%;
+        height: 20%;
     }
 }

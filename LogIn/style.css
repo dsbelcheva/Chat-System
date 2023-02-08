@@ -13,7 +13,7 @@ body {
     display: flex;
     justify-content: center;
     font-family: Arial, sans-serif;
-    height: 100vh;
+    height: 95vh;
 }
 
 .logIn-wrapper {
@@ -110,19 +110,29 @@ input[type=password] {
     display: none;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #cc99ff;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
 @media all and (max-width:400px) {
 
-    .logIn-wrapper {
+    body .logIn-wrapper {
+        height: 100%;
+        width: 100%;
         background-color: transparent;
         border: none;
         box-shadow: none;
-    }
-
-    .logIn-wrapper input {
-        background-color: transparent;
-    }
-
-    ::placeholder {
-        color: white;
     }
 }
