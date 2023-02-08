@@ -1,16 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+ 
 const firebaseConfig = {
-    apiKey: "AIzaSyDAUPbNdIA7cqFP8oDgACIdAxeGNvFPuJ4",
-    authDomain: "chat-system-46f67.firebaseapp.com",
-    databaseURL: "https://chat-system-46f67-default-rtdb.firebaseio.com",
-    projectId: "chat-system-46f67",
-    storageBucket: "chat-system-46f67.appspot.com",
-    messagingSenderId: "970782635917",
-    appId: "1:970782635917:web:0425b2a94f2bf01975efc4",
-    measurementId: "G-8XV2HB67SN"
-};
+    apiKey: "AIzaSyDWY6cQalBem41S-QnDOuNTPC7aLIGDHwU",
+    authDomain: "chat-system-36d51.firebaseapp.com",
+    projectId: "chat-system-36d51",
+    storageBucket: "chat-system-36d51.appspot.com",
+    messagingSenderId: "616629066529",
+    appId: "1:616629066529:web:c1c0b5091b30976ac4fc60",
+    measurementId: "G-0RQ2LQG04T"
+  };
 
 const app = initializeApp(firebaseConfig);
 const submit = document.getElementById("submitLogin");
