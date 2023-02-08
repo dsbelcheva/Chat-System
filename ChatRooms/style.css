@@ -89,7 +89,7 @@ main .message {
     width: fit-content;
     color: black;
     display: flex;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 main .message .username {
@@ -103,11 +103,14 @@ main .message .date-time,
 }
 
 main .message .date-time {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .likes {
+    background-color: transparent;
+    border:none;
     color: white;
+    font-size: 18px;
 }
 
 .likes i {
@@ -117,6 +120,17 @@ main .message .date-time {
 .likes i:hover {
     color: grey;
 }
+
+#deleteMessage , #updateMessage{
+    font-size:15px;
+    background-color: transparent;
+    border:none;
+    color:white;
+  }
+
+  #deleteMessage:hover , #updateMessage:hover{
+    color: grey;
+  }
 
 main .sendMessage {
     background-color: #cc99ff;
@@ -395,6 +409,10 @@ ul {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.red {
+    color:red;
 }
 
 @media only screen and (max-device-width: 667px),
