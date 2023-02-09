@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
- 
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyDWY6cQalBem41S-QnDOuNTPC7aLIGDHwU",
     authDomain: "chat-system-36d51.firebaseapp.com",
@@ -9,9 +10,10 @@ const firebaseConfig = {
     messagingSenderId: "616629066529",
     appId: "1:616629066529:web:c1c0b5091b30976ac4fc60",
     measurementId: "G-0RQ2LQG04T"
-  };
+};
 
 const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 const submit = document.getElementById("submitLogin");
 
 submit.addEventListener("click", (event) => {
@@ -21,6 +23,9 @@ submit.addEventListener("click", (event) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
         if (userCredential) {
+            var mail = email.split('@');
+            window.localStorage.setItem("username", mail[0]);
+            window.localStorage.setItem("currentChat", "General");
             window.location.replace("/ChatRooms/index.html");
         }
     })

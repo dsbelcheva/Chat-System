@@ -274,7 +274,6 @@ ul {
 }
 
 #AddnewGroup .create,
-.find,
 .ask-question {
     color: white;
     font-family: Arial, sans-serif;
@@ -374,15 +373,6 @@ ul {
     margin-left: 10px;
 }
 
-#AddnewGroup,
-#AddNewPerson,
-#requests-section,
-#notification-section,
-#groups-wrapper,
-#edit-message-section {
-    display: none;
-}
-
 .new-message .float-right {
     border-radius: 18px;
     padding: 8px;
@@ -393,6 +383,15 @@ ul {
 
 .new-message .float-right i {
     font-size: 20px;
+}
+
+#groups-wrapper.hidden,
+#notification-section.hidden,
+#AddnewGroup.hidden,
+#AddNewPerson.hidden,
+#requests-section.hidden,
+#edit-message-section.hidden {
+    display: none;
 }
 
 ::-webkit-scrollbar {
@@ -411,7 +410,7 @@ ul {
     background: #555;
 }
 
-.red {
+#notifications-btn.red {
     color:red;
 }
 

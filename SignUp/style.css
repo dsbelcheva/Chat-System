@@ -8,7 +8,6 @@
 
 body {
     font-size: 16px;
-    /*background: linear-gradient(#ffb3ff, #1a001a);*/
     background-image: url(Background.jpg);
     display: flex;
     justify-content: center;

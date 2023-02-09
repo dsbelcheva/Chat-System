@@ -1,7 +1,7 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
- import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 
-  const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyDWY6cQalBem41S-QnDOuNTPC7aLIGDHwU",
     authDomain: "chat-system-36d51.firebaseapp.com",
     projectId: "chat-system-36d51",
@@ -9,7 +9,7 @@
     messagingSenderId: "616629066529",
     appId: "1:616629066529:web:c1c0b5091b30976ac4fc60",
     measurementId: "G-0RQ2LQG04T"
-  };
+};
 
 const app = initializeApp(firebaseConfig);
 const submit = document.getElementById("submitSignUp");
@@ -25,14 +25,7 @@ submit.addEventListener("click", (event) => {
     }
     else {
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            if (userCredential) {
-                var mail = email.split('@');
-                window.localStorage.setItem("username", mail[0]);
-                window.localStorage.setItem("currentChat", "General");
-                window.localStorage.setItem("GeneralChatIsOpen", true);
-            }
-        })
+        createUserWithEmailAndPassword(auth, email, password)
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
