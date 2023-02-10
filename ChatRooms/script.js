@@ -325,11 +325,9 @@ buttonForInbox.addEventListener("click", (event) => {
 })
 
 groupsUL.addEventListener("click", (event) => {
-    window.localStorage.setItem("currentChat", event.target.innerText);
-    messagesUL.innerHTML = null;
+    window.localStorage.setItem("currentChat", event.target.innerText);    messagesUL.innerHTML = null;
+    document.getElementById("chatName").innerText=window.localStorage.getItem("currentChat");
     updateChat();
-    document.getElementById("groups-wrapper").classList.add("hidden");
-    groupsUL.innerHTML = null;
 })
 
 exitInbox.addEventListener("click", (event) => {
