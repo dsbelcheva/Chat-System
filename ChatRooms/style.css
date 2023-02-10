@@ -106,18 +106,18 @@ main .message .date-time {
     font-size: 12px;
 }
 
-.likes {
+#likes {
     background-color: transparent;
     border:none;
     color: white;
     font-size: 18px;
 }
 
-.likes i {
+#likes i {
     color: #e6005c;
 }
 
-.likes i:hover {
+#likes i:hover {
     color: grey;
 }
 

@@ -34,10 +34,9 @@ const buttonForNotifications = document.getElementById("notifications-btn");
 const exitNotifications = document.getElementById("exit-notifications");
 const requestsUL = document.getElementById("requests-ul");
 const notificationsUL = document.getElementById("notificationLists-ul");
+const submitEditedMessage = document.getElementById("submit-edit-message");
 
 /*
-const submitEditedMessage = document.getElementById("submit-edit-message");
-const buttonForLikes=document.getElementBuId("likes");
 const messageWindow = document.getElementById("messageBox");
 */
 
@@ -92,11 +91,20 @@ messagesUL.addEventListener("click", event => {
     event.preventDefault();
     const operation = event.target.parentNode.value;
     if (operation === "delete") {
-        const text = event.target.parentNode.parentNode.childNodes[9].innerText;
+        const text = event.target.parentNode.parentNode.childNodes[9].innerText;//////??????
         const date = event.target.parentNode.parentNode.childNodes[7].innerText;
         deleteThisMessage(text, date);
     }
     if (operation === "update") {
+        document.getElementById("edit-message-section").classList.remove("hidden");
+        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
+        submitEditedMessage.addEventListener("click",(event)=>{
+            const newText = document.getElementById("editMessageInput").value;
+            editThisMessage(date,newText);
+            messagesUL.innerHTML=null;
+            updateChat();
+           document.getElementById("editMessageInput").value="";
+        })
     }
     if (operation === "likes") {
     }
@@ -125,8 +133,23 @@ function sendNotifications(groupName) {
         });
 }
 
-function editThisMessage(Text, date, newText) {
-
+function editThisMessage(date,newText) {
+    get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
+        .then((snapshot) => {
+            for (var [key, value] of Object.entries(snapshot.val())) {
+                for (var [innerKey, innerValue] of Object.entries(value)) {
+                    if ( new Date(innerValue).toLocaleString() == date) {
+                        const updates={};
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/text`]=newText;
+                        update(dbRef,updates);
+                        return;
+                    }
+                }
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 exitEditingMessage.addEventListener("click", (event) => {
@@ -486,7 +509,7 @@ function updateChat() {
                 <p class="username">${usern}</p>
                 <p class="date-time">${new Date(date).toLocaleString()}</p>
                 <p class="text">${text}</p>
-                <button class="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
+                <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
                 `;
                         listItem.innerHTML = externalHTML;
                     } else {
@@ -494,7 +517,7 @@ function updateChat() {
                 <p class="username">${usern}</p>
                 <p class="date-time">${new Date(date).toLocaleString()}</p>
                 <p class="text">${text}</p>
-                <button class="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
+                <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
                 `;
                         listItem.innerHTML = externalHTML;
                     }
@@ -506,6 +529,5 @@ function updateChat() {
             console.error(error);
         });
 }
-
 
 
