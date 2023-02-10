@@ -121,6 +121,20 @@ main .message .date-time {
     color: grey;
 }
 
+#dislikes {
+    background-color: transparent;
+    border:none;
+    font-size: 18px;
+}
+
+#dislikes i {
+    color: grey;
+}
+
+#dislikes i:hover {
+    color: white;
+}
+
 #deleteMessage , #updateMessage{
     font-size:15px;
     background-color: transparent;

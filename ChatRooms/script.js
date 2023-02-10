@@ -11,7 +11,6 @@ const firebaseConfig = {
     measurementId: "G-0RQ2LQG04T"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const dbRef = ref(database);
@@ -36,9 +35,7 @@ const requestsUL = document.getElementById("requests-ul");
 const notificationsUL = document.getElementById("notificationLists-ul");
 const submitEditedMessage = document.getElementById("submit-edit-message");
 
-/*
-const messageWindow = document.getElementById("messageBox");
-*/
+//const messageWindow = document.getElementById("messageBox");
 
 var firstLogIn = true;
 
@@ -80,6 +77,7 @@ messageInput.addEventListener("change", (event) => {
         <p class="date-time">${new Date(currentDate).toLocaleString()}</p>
         <p class="text">${event.target.value}</p>
         <button id="likes" value="likes"><i class="fa fa-heart"></i> 0</button>
+        <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
         `;
     listItem.innerHTML = externalHTML;
     messagesUL.appendChild(listItem);
@@ -109,6 +107,13 @@ messagesUL.addEventListener("click", event => {
         const date = event.target.parentNode.parentNode.childNodes[7].innerText;
         const like = event.target.parentNode.parentNode.childNodes[11].innerText;
         likeMessage(date,like);
+        messagesUL.innerHTML = null;
+        updateChat();
+    }
+    if (operation === "dislikes") {
+        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
+        const like = event.target.parentNode.parentNode.childNodes[11].innerText;
+        dislikeMessage(date,like);
         messagesUL.innerHTML = null;
         updateChat();
     }
@@ -169,6 +174,25 @@ function likeMessage(date,like){
                     if (new Date(innerValue).toLocaleString() == date) {
                         const updates = {};
                         updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like)+1;
+                        update(dbRef, updates);
+                        return;
+                    }
+                })
+            })
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+function dislikeMessage(date,like){
+    get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
+        .then((snapshot) => {
+            Object.entries(snapshot.val()).forEach(([key, value]) => {
+                Object.entries(value).forEach(([innerKey, innerValue]) => {
+                    if (new Date(innerValue).toLocaleString() == date) {
+                        const updates = {};
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like)-1;
                         update(dbRef, updates);
                         return;
                     }
@@ -528,6 +552,7 @@ function updateChat() {
                 <p class="date-time">${new Date(date).toLocaleString()}</p>
                 <p class="text">${text}</p>
                 <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
+                <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
                 `;
                         listItem.innerHTML = externalHTML;
                     } else {
@@ -536,6 +561,7 @@ function updateChat() {
                 <p class="date-time">${new Date(date).toLocaleString()}</p>
                 <p class="text">${text}</p>
                 <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
+                <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
                 `;
                         listItem.innerHTML = externalHTML;
                     }
