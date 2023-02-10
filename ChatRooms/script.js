@@ -79,7 +79,7 @@ messageInput.addEventListener("change", (event) => {
         <p class="username">${window.localStorage.getItem("username")}</p>
         <p class="date-time">${new Date(currentDate).toLocaleString()}</p>
         <p class="text">${event.target.value}</p>
-        <button class="likes" value="likes"><i class="fa fa-heart"></i> 0</button>
+        <button id="likes" value="likes"><i class="fa fa-heart"></i> 0</button>
         `;
     listItem.innerHTML = externalHTML;
     messagesUL.appendChild(listItem);
@@ -91,19 +91,18 @@ messagesUL.addEventListener("click", event => {
     event.preventDefault();
     const operation = event.target.parentNode.value;
     if (operation === "delete") {
-        const text = event.target.parentNode.parentNode.childNodes[9].innerText;//////??????
         const date = event.target.parentNode.parentNode.childNodes[7].innerText;
-        deleteThisMessage(text, date);
+        deleteThisMessage(date);
     }
     if (operation === "update") {
         document.getElementById("edit-message-section").classList.remove("hidden");
         const date = event.target.parentNode.parentNode.childNodes[7].innerText;
-        submitEditedMessage.addEventListener("click",(event)=>{
+        submitEditedMessage.addEventListener("click", (event) => {
             const newText = document.getElementById("editMessageInput").value;
-            editThisMessage(date,newText);
-            messagesUL.innerHTML=null;
+            editThisMessage(date, newText);
+            messagesUL.innerHTML = null;
             updateChat();
-           document.getElementById("editMessageInput").value="";
+            document.getElementById("editMessageInput").value = "";
         })
     }
     if (operation === "likes") {
@@ -133,19 +132,19 @@ function sendNotifications(groupName) {
         });
 }
 
-function editThisMessage(date,newText) {
+function editThisMessage(date, newText) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
         .then((snapshot) => {
-            for (var [key, value] of Object.entries(snapshot.val())) {
-                for (var [innerKey, innerValue] of Object.entries(value)) {
-                    if ( new Date(innerValue).toLocaleString() == date) {
-                        const updates={};
-                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/text`]=newText;
-                        update(dbRef,updates);
+            Object.entries(snapshot.val()).forEach(([key, value]) => {
+                Object.entries(value).forEach(([innerKey, innerValue]) => {
+                    if (new Date(innerValue).toLocaleString() == date) {
+                        const updates = {};
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/text`] = newText;
+                        update(dbRef, updates);
                         return;
                     }
-                }
-            }
+                })
+            })
         })
         .catch((error) => {
             console.error(error);
@@ -158,24 +157,20 @@ exitEditingMessage.addEventListener("click", (event) => {
 })
 
 
-function deleteThisMessage(text, date) {
+function deleteThisMessage(date) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
         .then((snapshot) => {
             if (snapshot.exists()) {
-                for (var [key, value] of Object.entries(snapshot.val())) {
-                    var counter = 0;
-                    for (var [innerKey, innerValue] of Object.entries(value)) {
-                        if (innerValue === text || new Date(innerValue).toLocaleString() == date) {
-                            counter++;
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        if (new Date(innerValue).toLocaleString() == date) {
+                            remove(child(dbRef, "groups/" + window.localStorage.getItem("currentChat") + "/" + key));
+                            messagesUL.innerHTML = null;
+                            updateChat();
+                            return;
                         }
-                    }
-                    if (counter == 2) {
-                        remove(child(dbRef, "groups/" + window.localStorage.getItem("currentChat") + "/" + key));
-                        messagesUL.innerHTML = null;
-                        updateChat();
-                        break;
-                    }
-                }
+                    })
+                })
             }
         })
         .catch((error) => {
