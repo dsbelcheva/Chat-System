@@ -106,6 +106,11 @@ messagesUL.addEventListener("click", event => {
         })
     }
     if (operation === "likes") {
+        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
+        const like = event.target.parentNode.parentNode.childNodes[11].innerText;
+        likeMessage(date,like);
+        messagesUL.innerHTML = null;
+        updateChat();
     }
 });
 
@@ -156,6 +161,24 @@ exitEditingMessage.addEventListener("click", (event) => {
     document.getElementById("edit-message-section").classList.add("hidden");
 })
 
+function likeMessage(date,like){
+    get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
+        .then((snapshot) => {
+            Object.entries(snapshot.val()).forEach(([key, value]) => {
+                Object.entries(value).forEach(([innerKey, innerValue]) => {
+                    if (new Date(innerValue).toLocaleString() == date) {
+                        const updates = {};
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like)+1;
+                        update(dbRef, updates);
+                        return;
+                    }
+                })
+            })
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
 
 function deleteThisMessage(date) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
