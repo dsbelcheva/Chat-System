@@ -33,12 +33,12 @@ const exitRequests = document.getElementById("exit-requests");
 const buttonForNotifications = document.getElementById("notifications-btn");
 const exitNotifications = document.getElementById("exit-notifications");
 const requestsUL = document.getElementById("requests-ul");
-const notificationsUL = document.getElementById("notificatonLists-ul");
+const notificationsUL = document.getElementById("notificationLists-ul");
 
 /*
 const submitEditedMessage = document.getElementById("submit-edit-message");
-const messageWindow = document.getElementById("messageBox");
 const buttonForLikes=document.getElementBuId("likes");
+const messageWindow = document.getElementById("messageBox");
 */
 
 var firstLogIn = true;
@@ -49,55 +49,13 @@ if (firstLogIn) {
 }
 
 get(child(dbRef, "users/" + window.localStorage.getItem("username")))
-    .then((snapshot1) => {
-        if (!snapshot1.exists()) {
+    .then((snapshot) => {
+        if (!snapshot.exists()) {
             const createdRef = ref(database, "users/" + window.localStorage.getItem("username"));
             const newRef = push(createdRef);
             set(newRef, {
                 groupName: "General",
             });
-            get(child(dbRef, "groups-users/" + "General"))//
-                .then((snapshot2) => {
-                    if (snapshot2.exists()) {
-                        get(child(dbRef, "groups-users/" + "General/" + window.localStorage.getItem("username")))
-                            .then((snapshot3) => {
-                                if (!snapshot3.exists()) {
-                                    const createdRef = ref(database, "groups-users/" + "General");
-                                    const newRef = push(createdRef);
-                                    set(newRef, {
-                                        username: window.localStorage.getItem("username"),
-                                    });
-                                }
-                            })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-
-get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-            buttonForRequests.classList.add("red");
-        }
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-
-get(child(dbRef, "notifications/" + window.localStorage.getItem("username")))
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-            buttonForNotifications.classList.add("red");
         }
     })
     .catch((error) => {
@@ -127,7 +85,7 @@ messageInput.addEventListener("change", (event) => {
     listItem.innerHTML = externalHTML;
     messagesUL.appendChild(listItem);
     event.target.value = "";
-    //sendNotifications(window.localStorage.getItem("currentChat"));
+    sendNotifications(window.localStorage.getItem("currentChat"));
 });
 
 messagesUL.addEventListener("click", event => {
@@ -143,6 +101,29 @@ messagesUL.addEventListener("click", event => {
     if (operation === "likes") {
     }
 });
+
+function sendNotifications(groupName) {
+    get(child(dbRef, "groups-users/" + groupName))
+        .then((snapshot1) => {
+            if (snapshot1.exists()) {
+                Object.entries(snapshot1.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        get(child(dbRef, "notifications/" + innerValue))
+                        if (innerValue !== window.localStorage.getItem("username")) {
+                            const createdRef = ref(database, "notifications/" + innerValue);
+                            const newRef = push(createdRef);
+                            set(newRef, {
+                                notification: groupName,
+                            });
+                        }
+                    })
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
 
 function editThisMessage(Text, date, newText) {
 
@@ -296,6 +277,17 @@ exitInbox.addEventListener("click", (event) => {
     groupsUL.innerHTML = null;
 })
 
+get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            buttonForRequests.classList.add("red");
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+
 buttonForRequests.addEventListener("click", (event) => {
     event.preventDefault();
     document.getElementById("requests-section").classList.remove("hidden");
@@ -309,18 +301,15 @@ requestsUL.addEventListener("click", (event) => {
         joinTheGroup(chatName);
         addToChatsUserList(chatName);
         removeChosenRequest(chatName);
-        updateRequests();
     }
     else {
         removeChosenRequest(chatName);
-        updateRequests();
     }
 })
 
 exitRequests.addEventListener("click", (event) => {
     event.preventDefault();
     document.getElementById("requests-section").classList.add("hidden");
-    requestsUL.innerHTML = null;
 })
 
 function joinTheGroup(chatName) {
@@ -395,24 +384,70 @@ function updateRequests() {
         });
 }
 
+get(child(dbRef, "notifications/" + window.localStorage.getItem("username")))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            buttonForNotifications.classList.add("red");
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
 buttonForNotifications.addEventListener("click", (event) => {
     event.preventDefault();
-    // updateNotifications();
     document.getElementById("notification-section").classList.remove("hidden");
+    updateNotifications();
 });
 
-notificationsUL.addEventListener("click", (event) => {
-
-})
+function updateNotifications() {
+    notificationsUL.innerHTML = null;
+    get(child(dbRef, "notifications/" + window.localStorage.getItem("username")))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        console.log(innerKey);
+                        const listItem = document.createElement("li");
+                        const externalHTML = `
+              <p class="chatName">${innerValue}</p>
+              `;
+                        listItem.innerHTML = externalHTML;
+                        notificationsUL.appendChild(listItem);
+                    })
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
 
 exitNotifications.addEventListener("click", (event) => {
     event.preventDefault();
     document.getElementById("notification-section").classList.add("hidden");
-    notificationsUL.innerHTML = null;
 });
 
-function addToChatsUserList(name) {
-    const createdRef = ref(database, "groups-users/" + name);
+notificationsUL.addEventListener("click", (event) => {
+    get(child(dbRef, "notifications/" + window.localStorage.getItem("username")))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        if (innerValue == event.target.innerText.trim()) {
+                            remove(child(dbRef, "notifications/" + window.localStorage.getItem("username") + "/" + key));
+                        }
+                    })
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+})
+
+function addToChatsUserList(chatName) {
+    const createdRef = ref(database, "groups-users/" + chatName);
     const newRef = push(createdRef);
     set(newRef, {
         username: window.localStorage.getItem("username"),
@@ -471,4 +506,6 @@ function updateChat() {
             console.error(error);
         });
 }
+
+
 
