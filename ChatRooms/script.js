@@ -26,21 +26,21 @@ const exitNewPeople = document.getElementById("exit-new-person");
 const buttonForInbox = document.getElementById("inbox-btn");
 const groupsUL = document.getElementById("groups-ul");
 const exitInbox = document.getElementById("exit-groups-list");
+const exitEditingMessage = document.getElementById("exit-change-message");
+const buttonToLeave = document.getElementById("LeaveChat");
 const buttonForRequests = document.getElementById("requests-btn");
 const exitRequests = document.getElementById("exit-requests");
 const buttonForNotifications = document.getElementById("notifications-btn");
-const notificationsUL = document.getElementById("notificatonLists-ul");
 const exitNotifications = document.getElementById("exit-notifications");
-
+const requestsUL = document.getElementById("requests-ul");
+const notificationsUL = document.getElementById("notificatonLists-ul");
 
 /*
-const buttonToLeave = document.getElementById("LeaveChat");
-const requestsUL = document.getElementById("requests-ul");
-//const editMessage=document.getElementById("submit-edit-message");
-const exitEditingMessage = document.getElementById("exit-change-message");
-//const buttonToLikeMessage = document.getElementById("likes");
+const submitEditedMessage = document.getElementById("submit-edit-message");
 const messageWindow = document.getElementById("messageBox");
+const buttonForLikes=document.getElementBuId("likes");
 */
+
 var firstLogIn = true;
 
 if (firstLogIn) {
@@ -49,13 +49,55 @@ if (firstLogIn) {
 }
 
 get(child(dbRef, "users/" + window.localStorage.getItem("username")))
-    .then((snapshot) => {
-        if (!snapshot.exists()) {
+    .then((snapshot1) => {
+        if (!snapshot1.exists()) {
             const createdRef = ref(database, "users/" + window.localStorage.getItem("username"));
             const newRef = push(createdRef);
             set(newRef, {
                 groupName: "General",
             });
+            get(child(dbRef, "groups-users/" + "General"))//
+                .then((snapshot2) => {
+                    if (snapshot2.exists()) {
+                        get(child(dbRef, "groups-users/" + "General/" + window.localStorage.getItem("username")))
+                            .then((snapshot3) => {
+                                if (!snapshot3.exists()) {
+                                    const createdRef = ref(database, "groups-users/" + "General");
+                                    const newRef = push(createdRef);
+                                    set(newRef, {
+                                        username: window.localStorage.getItem("username"),
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+
+get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            buttonForRequests.classList.add("red");
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+get(child(dbRef, "notifications/" + window.localStorage.getItem("username")))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            buttonForNotifications.classList.add("red");
         }
     })
     .catch((error) => {
@@ -93,7 +135,8 @@ messagesUL.addEventListener("click", event => {
     const operation = event.target.parentNode.value;
     if (operation === "delete") {
         const text = event.target.parentNode.parentNode.childNodes[9].innerText;
-        deleteThisMessage(text);
+        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
+        deleteThisMessage(text, date);
     }
     if (operation === "update") {
     }
@@ -101,18 +144,32 @@ messagesUL.addEventListener("click", event => {
     }
 });
 
-function deleteThisMessage(text) {
+function editThisMessage(Text, date, newText) {
+
+}
+
+exitEditingMessage.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("edit-message-section").classList.add("hidden");
+})
+
+
+function deleteThisMessage(text, date) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
         .then((snapshot) => {
             if (snapshot.exists()) {
                 for (var [key, value] of Object.entries(snapshot.val())) {
+                    var counter = 0;
                     for (var [innerKey, innerValue] of Object.entries(value)) {
-                        if (innerValue === text) {
-                            remove(child(dbRef, "groups/" + window.localStorage.getItem("currentChat") + "/" + key));
-                            messagesUL.innerHTML = null;
-                            updateChat();
-                            break;
+                        if (innerValue === text || new Date(innerValue).toLocaleString() == date) {
+                            counter++;
                         }
+                    }
+                    if (counter == 2) {
+                        remove(child(dbRef, "groups/" + window.localStorage.getItem("currentChat") + "/" + key));
+                        messagesUL.innerHTML = null;
+                        updateChat();
+                        break;
                     }
                 }
             }
@@ -136,7 +193,7 @@ addNewGroup.addEventListener("click", (event) => {
         username: "System",
         date: Date.now(),
         text: `This group is ${name} !`,
-        likes:0,
+        likes: 0,
     });
     get(child(dbRef, "users/" + window.localStorage.getItem("username")))
         .then((snapshot) => {
@@ -152,7 +209,7 @@ addNewGroup.addEventListener("click", (event) => {
             console.error(error);
         });
     document.getElementById("newGroup").value = null;
-    //addUserToChatsUserList(name);
+    addToChatsUserList(name);
 });
 
 exitNewGroup.addEventListener("click", (event) => {
@@ -168,23 +225,37 @@ buttonForNewPeople.addEventListener("click", (event) => {
 addNewPeople.addEventListener("click", (event) => {
     event.preventDefault();
     var name = document.getElementById("newPerson").value;
-    if (window.localStorage.getItem(name)) {
-        var chat = window.localStorage.getItem("currentChat");
-        const createdPersonRequest = ref(database, "requests/" + name);
-        const newRequestRef = push(createdPersonRequest);
-        set(newRequestRef, {
-            chatToJoin: chat,
-        });
-    }
-    else {
-        alert("No such user !");
-    }
+    var chat = window.localStorage.getItem("currentChat");
+    const createdPersonRequest = ref(database, "requests/" + name);
+    const newRequestRef = push(createdPersonRequest);
+    set(newRequestRef, {
+        chatToJoin: chat,
+    });
     document.getElementById("newPerson").value = null;
 })
 
 exitNewPeople.addEventListener("click", (event) => {
     event.preventDefault();
     document.getElementById("AddNewPerson").classList.add("hidden");
+})
+
+buttonToLeave.addEventListener("click", (event) => {
+    event.preventDefault();
+    get(child(dbRef, "users/" + window.localStorage.getItem("username")))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        if (innerValue == window.localStorage.getItem("currentChat")) {
+                            remove(child(dbRef, "users/" + window.localStorage.getItem("username") + "/" + key));
+                        }
+                    })
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 })
 
 buttonForInbox.addEventListener("click", (event) => {
@@ -225,7 +296,128 @@ exitInbox.addEventListener("click", (event) => {
     groupsUL.innerHTML = null;
 })
 
+buttonForRequests.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("requests-section").classList.remove("hidden");
+    updateRequests();
+})
 
+requestsUL.addEventListener("click", (event) => {
+    event.preventDefault();
+    var chatName = event.target.value;
+    if (event.target.innerText.trim() == "Yes") {
+        joinTheGroup(chatName);
+        addToChatsUserList(chatName);
+        removeChosenRequest(chatName);
+        updateRequests();
+    }
+    else {
+        removeChosenRequest(chatName);
+        updateRequests();
+    }
+})
+
+exitRequests.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("requests-section").classList.add("hidden");
+    requestsUL.innerHTML = null;
+})
+
+function joinTheGroup(chatName) {
+    get(child(dbRef, "groups/" + chatName))
+        .then((snapshot1) => {
+            if (snapshot1.exists()) {
+                get(child(dbRef, "users/" + window.localStorage.getItem("username")))
+                    .then((snapshot2) => {
+                        if (snapshot2.exists()) {
+                            const createdRef = ref(database, "users/" + window.localStorage.getItem("username"));
+                            const newRef = push(createdRef);
+                            set(newRef, {
+                                groupName: chatName,
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+function removeChosenRequest(chatName) {
+    get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        if (innerValue == chatName) {
+                            remove(child(dbRef, "requests/" + window.localStorage.getItem("username") + "/" + key));
+                        }
+                    })
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+function updateRequests() {
+    requestsUL.innerHTML = null;
+    get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([key, value]) => {
+                    var chatName = "";
+                    Object.entries(value).forEach(([innerKey, innerValue]) => {
+                        if (innerKey === "chatToJoin") {
+                            chatName = innerValue;
+                        }
+                    })
+                    const listItem = document.createElement("li");
+                    const externalHTML = `
+            <p id="groupNameFromRequest" class="chatName">${chatName}</p>
+                <div>
+                <button id="yesButton" value="${chatName}">Yes</button>
+                <button id="noButton" value="${chatName}">No</button>
+              </div>
+            `;
+                    listItem.innerHTML = externalHTML;
+                    requestsUL.appendChild(listItem);
+                })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+buttonForNotifications.addEventListener("click", (event) => {
+    event.preventDefault();
+    // updateNotifications();
+    document.getElementById("notification-section").classList.remove("hidden");
+});
+
+notificationsUL.addEventListener("click", (event) => {
+
+})
+
+exitNotifications.addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("notification-section").classList.add("hidden");
+    notificationsUL.innerHTML = null;
+});
+
+function addToChatsUserList(name) {
+    const createdRef = ref(database, "groups-users/" + name);
+    const newRef = push(createdRef);
+    set(newRef, {
+        username: window.localStorage.getItem("username"),
+    });
+}
 
 function updateChat() {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
@@ -280,202 +472,3 @@ function updateChat() {
         });
 }
 
-
-/*
-if ((database, "requests/" + window.localStorage.getItem("username"))) {
-get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
-    .then((snapshot) => {
-        if (snapshot.exists()) {
-            buttonForRequests.classList.add("red");
-        }
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-}
-
-buttonToLeave.addEventListener("click", (event) => {
-    event.preventDefault();
-    get(child(dbRef, "users/" + window.localStorage.getItem("username")))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                Object.entries(snapshot.val()).forEach(([key, value]) => {
-                    Object.entries(value).forEach(([innerKey, innerValue]) => {
-                        if (innerValue == window.localStorage.getItem("currentChat")) {
-                            remove(child(dbRef, "users/" + window.localStorage.getItem("username") + "/" + key));
-                        }
-                    })
-                })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-})
-
-buttonForRequests.addEventListener("click", (event) => {
-    event.preventDefault();
-    requestsUL.innerHTML=null;
-    document.getElementById("requests-section").classList.remove("hidden");
-    get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                Object.entries(snapshot.val()).forEach(([key, value]) => {
-                    var chatName = "";
-                    Object.entries(value).forEach(([innerKey, innerValue]) => {
-                        if (innerKey == "chatToJoin") {
-                            chatName = innerValue;
-                        }
-                    })
-                    const listItem = document.createElement("li");
-                    const externalHTML = `
-               <p id="groupNameFromRequest" class="chatName">${chatName}</p>
-                <div>
-                <button id="yesButton" value="${chatName}">Yes</button>
-                <button id="noButton" value="${chatName}">No</button>
-                </div>
-            `;
-                    listItem.innerHTML = externalHTML;
-                    requestsUL.appendChild(listItem);
-                })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-})
-
-buttonForEditingMessage.addEventListener("click",(event)=>{
-    
-})
-
-buttonToLikeMessage.addEventListener("click",(event)=>{
-    
-})
-
-editMessage.addEventListener("click",(event)=>{
-    
-})
-
-exitRequests.addEventListener("click", (event) => {
-    event.preventDefault();
-    document.getElementById("requests-section").classList.add("hidden");
-    requestsUL.innerHTML = null;
-})
-
-exitEditingMessage.addEventListener("click", (event) => {
-    event.preventDefault();
-    document.getElementById("edit-message-section").classList.add("hidden");
-})
-
-messagesUL.addEventListener("click", (event) => {
-
-})
-
-requestsUL.addEventListener("click", (event) => {
-    event.preventDefault();
-    var chatName = event.target.value;
-    if (event.target.innerText.trim() == "Yes") {
-        AnswerYes(chatName);
-    }
-    else {
-        AnswerNo(chatName);
-    }
-})
-
-function joinTheGroup(name) {
-    get(child(dbRef, "groups/" + name))
-        .then((snapshot1) => {
-            if (snapshot1.exists()) {
-                const data = snapshot1.val();
-                get(child(dbRef, "users/" + window.localStorage.getItem("username")))
-                    .then((snapshot2) => {
-                        if (snapshot2.exists()) {
-                            const createdRef = ref(database, "users/" + window.localStorage.getItem("username"));
-                            const newRef = push(createdRef);
-                            set(newRef, {
-                                groupName: name,
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            } else {
-                alert("No available data!");
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
-function AnswerYes(name) {
-    joinTheGroup(name);
-    addUserToChatsUserList(name);
-    removeChosenRequest(name);
-    updateRequests();
-}
-
-function AnswerNo(name) {
-    removeChosenRequest(name);
-    updateRequests();
-}
-
-function removeChosenRequest(name) {
-    get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                Object.entries(snapshot.val()).forEach(([key, value]) => {
-                    Object.entries(value).forEach(([innerKey, innerValue]) => {
-                        if (innerValue == name) {
-                            remove(child(dbRef, "requests/" + window.localStorage.getItem("username") + "/" + key));
-                        }
-                    })
-                })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
-function updateRequests() {
-    requestsUL.innerHTML = null;
-    get(child(dbRef, "requests/" + window.localStorage.getItem("username")))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                Object.entries(snapshot.val()).forEach(([key, value]) => {
-                    var chatName = "";
-                    Object.entries(value).forEach(([innerKey, innerValue]) => {
-                        if (innerKey === "chatToJoin") {
-                            chatName = innerValue;
-                        }
-                    })
-                    const listItem = document.createElement("li");
-                    const externalHTML = `
-            <p id="groupNameFromRequest" class="chatName">${chatName}</p>
-                <div>
-                <button id="yesButton" onclick="AnswerYes(${chatName})">Yes</button>
-                <button id="noButton" onclick="removeTheRequest(${chatName})">No</button>
-              </div>
-            `;
-                    listItem.innerHTML = externalHTML;
-                    requestsUL.appendChild(listItem);
-                })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
-function addUserToChatsUserList(name) {
-    const createdRef = ref(database, "groups-users/" + name);
-    const newRef = push(createdRef);
-    set(newRef, {
-        username: window.localStorage.getItem("username"),
-    });
-}
-
-*/

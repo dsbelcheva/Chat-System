@@ -410,8 +410,8 @@ ul {
     background: #555;
 }
 
-#notifications-btn.red {
-    color:red;
+#notifications-btn.red,#requests-btn.red {
+    color:#e6005c;
 }
 
 @media only screen and (max-device-width: 667px),
