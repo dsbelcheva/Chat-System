@@ -35,8 +35,6 @@ const requestsUL = document.getElementById("requests-ul");
 const notificationsUL = document.getElementById("notificationLists-ul");
 const submitEditedMessage = document.getElementById("submit-edit-message");
 
-//const messageWindow = document.getElementById("messageBox");
-
 var firstLogIn = true;
 
 if (firstLogIn) {
@@ -88,34 +86,26 @@ messageInput.addEventListener("change", (event) => {
 messagesUL.addEventListener("click", event => {
     event.preventDefault();
     const operation = event.target.parentNode.value;
+    const date = event.target.parentNode.parentNode.childNodes[7].innerText;
+    const like = event.target.parentNode.parentNode.childNodes[11].innerText;
     if (operation === "delete") {
-        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
         deleteThisMessage(date);
     }
     if (operation === "update") {
         document.getElementById("edit-message-section").classList.remove("hidden");
-        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
         submitEditedMessage.addEventListener("click", (event) => {
             const newText = document.getElementById("editMessageInput").value;
             editThisMessage(date, newText);
-            messagesUL.innerHTML = null;
-            updateChat();
+            /* messagesUL.innerHTML = null;
+               updateChat();*/
             document.getElementById("editMessageInput").value = "";
         })
     }
     if (operation === "likes") {
-        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
-        const like = event.target.parentNode.parentNode.childNodes[11].innerText;
-        likeMessage(date,like);
-        messagesUL.innerHTML = null;
-        updateChat();
+        likeMessage(date, like);
     }
     if (operation === "dislikes") {
-        const date = event.target.parentNode.parentNode.childNodes[7].innerText;
-        const like = event.target.parentNode.parentNode.childNodes[11].innerText;
-        dislikeMessage(date,like);
-        messagesUL.innerHTML = null;
-        updateChat();
+        dislikeMessage(date, like);
     }
 });
 
@@ -164,17 +154,21 @@ function editThisMessage(date, newText) {
 exitEditingMessage.addEventListener("click", (event) => {
     event.preventDefault();
     document.getElementById("edit-message-section").classList.add("hidden");
+    messagesUL.innerHTML = null;
+    updateChat();
 })
 
-function likeMessage(date,like){
+function likeMessage(date, like) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
         .then((snapshot) => {
             Object.entries(snapshot.val()).forEach(([key, value]) => {
                 Object.entries(value).forEach(([innerKey, innerValue]) => {
                     if (new Date(innerValue).toLocaleString() == date) {
                         const updates = {};
-                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like)+1;
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like) + 1;
                         update(dbRef, updates);
+                        messagesUL.innerHTML = null;
+                        updateChat();
                         return;
                     }
                 })
@@ -185,15 +179,17 @@ function likeMessage(date,like){
         });
 }
 
-function dislikeMessage(date,like){
+function dislikeMessage(date, like) {
     get(child(dbRef, "groups/" + window.localStorage.getItem("currentChat")))
         .then((snapshot) => {
             Object.entries(snapshot.val()).forEach(([key, value]) => {
                 Object.entries(value).forEach(([innerKey, innerValue]) => {
                     if (new Date(innerValue).toLocaleString() == date) {
                         const updates = {};
-                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like)-1;
+                        updates[`/groups/${window.localStorage.getItem("currentChat")}/${key}/likes`] = Number(like) - 1;
                         update(dbRef, updates);
+                        messagesUL.innerHTML = null;
+                        updateChat();
                         return;
                     }
                 })
