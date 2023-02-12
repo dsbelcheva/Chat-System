@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getDatabase, ref, push, set, child, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+import { getDatabase, ref, push, set, child, get, update, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDWY6cQalBem41S-QnDOuNTPC7aLIGDHwU",
@@ -68,7 +68,7 @@ messageInput.addEventListener("change", (event) => {
     });
     const listItem = document.createElement("li");
     listItem.classList.add("message");
-    const externalHTML = `
+    const content = `
         <button id="updateMessage" class="updateMessage" value="update"><i class="fa fa-pencil"></i></button>
         <button id="deleteMessage" class="deleteMessage" value="delete"><i class="fa fa-trash"></i></button>
         <p class="username">${window.localStorage.getItem("username")}</p>
@@ -77,7 +77,7 @@ messageInput.addEventListener("change", (event) => {
         <button id="likes" value="likes"><i class="fa fa-heart"></i> 0</button>
         <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
         `;
-    listItem.innerHTML = externalHTML;
+    listItem.innerHTML = content;
     messagesUL.appendChild(listItem);
     event.target.value = "";
     sendNotifications(window.localStorage.getItem("currentChat"));
@@ -85,26 +85,24 @@ messageInput.addEventListener("change", (event) => {
 
 messagesUL.addEventListener("click", event => {
     event.preventDefault();
-    const operation = event.target.parentNode.value;
+    const clicked = event.target.parentNode.value;
     const date = event.target.parentNode.parentNode.childNodes[7].innerText;
     const like = event.target.parentNode.parentNode.childNodes[11].innerText;
-    if (operation === "delete") {
+    if (clicked === "delete") {
         deleteThisMessage(date);
     }
-    if (operation === "update") {
+    if (clicked === "update") {
         document.getElementById("edit-message-section").classList.remove("hidden");
         submitEditedMessage.addEventListener("click", (event) => {
             const newText = document.getElementById("editMessageInput").value;
             editThisMessage(date, newText);
-            /* messagesUL.innerHTML = null;
-               updateChat();*/
             document.getElementById("editMessageInput").value = "";
         })
     }
-    if (operation === "likes") {
+    if (clicked === "likes") {
         likeMessage(date, like);
     }
-    if (operation === "dislikes") {
+    if (clicked === "dislikes") {
         dislikeMessage(date, like);
     }
 });
@@ -234,7 +232,7 @@ addNewGroup.addEventListener("click", (event) => {
     set(newRef, {
         username: "System",
         date: Date.now(),
-        text: `This group is ${name} !`,
+        text: `This group was created by ${window.localStorage.getItem("username")} !`,
         likes: 0,
     });
     get(child(dbRef, "users/" + window.localStorage.getItem("username")))
@@ -310,10 +308,10 @@ buttonForInbox.addEventListener("click", (event) => {
                     Object.entries(value).forEach(([innerKey, innerValue]) => {
                         const chatName = innerValue;
                         const listItem = document.createElement("li");
-                        const externalHTML = `
+                        const content = `
                   <p class="chatName" >${chatName}</p>
                 `;
-                        listItem.innerHTML = externalHTML;
+                        listItem.innerHTML = content;
                         groupsUL.appendChild(listItem)
                     })
                 })
@@ -325,8 +323,8 @@ buttonForInbox.addEventListener("click", (event) => {
 })
 
 groupsUL.addEventListener("click", (event) => {
-    window.localStorage.setItem("currentChat", event.target.innerText);    messagesUL.innerHTML = null;
-    document.getElementById("chatName").innerText=window.localStorage.getItem("currentChat");
+    window.localStorage.setItem("currentChat", event.target.innerText); messagesUL.innerHTML = null;
+    document.getElementById("chatName").innerText = window.localStorage.getItem("currentChat");
     updateChat();
 })
 
@@ -426,14 +424,14 @@ function updateRequests() {
                         }
                     })
                     const listItem = document.createElement("li");
-                    const externalHTML = `
+                    const content = `
             <p id="groupNameFromRequest" class="chatName">${chatName}</p>
                 <div>
                 <button id="yesButton" value="${chatName}">Yes</button>
                 <button id="noButton" value="${chatName}">No</button>
               </div>
             `;
-                    listItem.innerHTML = externalHTML;
+                    listItem.innerHTML = content;
                     requestsUL.appendChild(listItem);
                 })
             }
@@ -468,10 +466,10 @@ function updateNotifications() {
                     Object.entries(value).forEach(([innerKey, innerValue]) => {
                         console.log(innerKey);
                         const listItem = document.createElement("li");
-                        const externalHTML = `
+                        const content = `
               <p class="chatName">${innerValue}</p>
               `;
-                        listItem.innerHTML = externalHTML;
+                        listItem.innerHTML = content;
                         notificationsUL.appendChild(listItem);
                     })
                 })
@@ -539,7 +537,7 @@ function updateChat() {
                     const listItem = document.createElement("li");
                     listItem.classList.add("message");
                     if (usern === window.localStorage.getItem("username")) {
-                        const externalHTML = `
+                        const content = `
                 <button id="updateMessage" class="updateMessage" value="update"><i class="fa fa-pencil"></i></button>
                 <button id="deleteMessage" class="deleteMessage" value="delete"><i class="fa fa-trash"></i></button>
                 <p class="username">${usern}</p>
@@ -548,16 +546,16 @@ function updateChat() {
                 <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
                 <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
                 `;
-                        listItem.innerHTML = externalHTML;
+                        listItem.innerHTML = content;
                     } else {
-                        const externalHTML = `
+                        const content = `
                 <p class="username">${usern}</p>
                 <p class="date-time">${new Date(date).toLocaleString()}</p>
                 <p class="text">${text}</p>
                 <button id="likes" value="likes"><i class="fa fa-heart"></i> ${likes}</button>
                 <button id="dislikes" value="dislikes"><i class="fa fa-thumbs-down"></i></button>
                 `;
-                        listItem.innerHTML = externalHTML;
+                        listItem.innerHTML = content;
                     }
                     messagesUL.appendChild(listItem);
                 })

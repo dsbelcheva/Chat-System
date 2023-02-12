@@ -12,14 +12,14 @@ body {
     display: flex;
     justify-content: center;
     font-family: Arial, sans-serif;
-    height: 95vh;
+    height: 95%;
 }
 
 .logIn-wrapper {
     margin-top: 200px;
     background-image: linear-gradient(#cc99ff, #ff99cc);
     max-width: 25rem;
-    max-height: 55vh;
+    max-height: 55%;
     width: 100%;
     padding: 2.5rem;
     border-radius: 8px;
@@ -111,19 +111,19 @@ input[type=password] {
 
 ::-webkit-scrollbar {
     width: 5px;
-  }
+}
 
-  ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
-  ::-webkit-scrollbar-thumb {
+}
+
+::-webkit-scrollbar-thumb {
     background: #cc99ff;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+}
 
 @media all and (max-width:400px) {
 

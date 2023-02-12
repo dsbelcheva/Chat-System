@@ -35,6 +35,24 @@
             </article>
         </main>
 
+        <section id="AddNewPerson" class="hidden">
+            <div class="find-person">
+                <p class="find">Add a person to the chat</p>
+                <input id="newPerson" type="text" placeholder="Enter person's username" />
+                <button id="submitNewPerson" class="btn">Add</button>
+            </div>
+            <button id="exit-new-person" class="exit"><i class="fa fa-times"></i></button>
+        </section>
+
+        <section id="AddnewGroup" class="hidden">
+            <div class="create-new-group">
+                <p class="create">Create new group</p>
+                <input id="newGroup" type="text" placeholder="Enter group name" />
+                <button id="submitNewGroup" class="btn">Create</button>
+            </div>
+            <button id="exit-new-group" class="exit"><i class="fa fa-times"></i></button>
+        </section>
+
         <section id="groups-wrapper" class="hidden">
             <p class="chats-title">Your chats</p>
             <nav class="group-chats">
@@ -42,6 +60,13 @@
                 </ul>
             </nav>
             <button id="exit-groups-list" class="exit"><i class="fa fa-times"></i></button>
+        </section>
+        
+        <section id="requests-section" class="hidden">
+            <p class="ask-question">Do you want to join this group?</p>
+            <ul id="requests-ul">
+            </ul>
+            <button id="exit-requests" class="exit"><i class="fa fa-times"></i></button>
         </section>
 
         <section id="notification-section" class="hidden">
@@ -53,37 +78,12 @@
             <button id="exit-notifications" class="exit"><i class="fa fa-times"></i></button>
         </section>
 
-        <section id="AddnewGroup" class="hidden">
-            <div class="create-new-group">
-                <p class="create">Create new group</p>
-                <input id="newGroup" type="text" placeholder="Enter group name" />
-                <button id="submitNewGroup" class="float-right">Create</button>
-            </div>
-            <button id="exit-new-group" class="exit"><i class="fa fa-times"></i></button>
-        </section>
-
-        <section id="AddNewPerson" class="hidden">
-            <div class="find-person">
-                <p class="find">Add a person to the chat</p>
-                <input id="newPerson" type="text" placeholder="Enter person's username" />
-                <button id="submitNewPerson" class="float-right">Add</button>
-            </div>
-            <button id="exit-new-person" class="exit"><i class="fa fa-times"></i></button>
-        </section>
-
-        <section id="requests-section" class="hidden">
-            <p class="ask-question">Do you want to join this group?</p>
-            <ul id="requests-ul">
-            </ul>
-            <button id="exit-requests" class="exit"><i class="fa fa-times"></i></button>
-        </section>
-
         <section id="edit-message-section" class="hidden">
             <p><i class="fa fa-pencil"></i></p>
             <div class="new-message">
-            <input type="text" class="editMessage" id="editMessageInput" placeholder="Type new message..." />
-            <button id="submit-edit-message" class="float-right"><i class="fa fa-angle-double-right"></i></button>
-          </div>
+                <input type="text" class="editMessage" id="editMessageInput" placeholder="Type new message..." />
+                <button id="submit-edit-message" class="btn"><i class="fa fa-angle-double-right"></i></button>
+            </div>
             <button id="exit-change-message" class="exit"><i class="fa fa-times"></i></button>
         </section>
 

@@ -13,7 +13,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 94vh;
+    min-height: 94%;
     margin: 0 0 50px;
 }
 
@@ -21,7 +21,7 @@ body {
     background-color: white;
     margin-top: 50px;
     max-width: 80rem;
-    height: 84vh;
+    height: 84%;
     width: 100%;
     border-radius: 10px;
     box-shadow: 20px 20px 50px 15px black;
@@ -108,7 +108,7 @@ main .message .date-time {
 
 #likes {
     background-color: transparent;
-    border:none;
+    border: none;
     color: white;
     font-size: 18px;
 }
@@ -123,7 +123,7 @@ main .message .date-time {
 
 #dislikes {
     background-color: transparent;
-    border:none;
+    border: none;
     font-size: 18px;
 }
 
@@ -135,16 +135,18 @@ main .message .date-time {
     color: white;
 }
 
-#deleteMessage , #updateMessage{
-    font-size:15px;
+#deleteMessage,
+#updateMessage {
+    font-size: 15px;
     background-color: transparent;
-    border:none;
-    color:white;
-  }
+    border: none;
+    color: white;
+}
 
-  #deleteMessage:hover , #updateMessage:hover{
+#deleteMessage:hover,
+#updateMessage:hover {
     color: grey;
-  }
+}
 
 main .sendMessage {
     background-color: #cc99ff;
@@ -182,7 +184,7 @@ ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 60vh;
+    height: 60%;
     width: 30%;
     background-color: #cc99ff;
     border-radius: 50px;
@@ -197,7 +199,7 @@ ul {
 #notification-section nav ul {
     margin: 0px;
     padding: 5px;
-    max-height: 50vh;
+    max-height: 28rem;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -211,6 +213,13 @@ ul {
     font-family: Arial, sans-serif;
     margin: 0px;
     padding: 30px;
+}
+
+#AddNewPerson .find {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
 #groups-wrapper nav li,
@@ -295,8 +304,8 @@ ul {
     font-weight: bold;
 }
 
-#AddnewGroup .float-right,
-#AddNewPerson .float-right,
+#AddnewGroup .btn,
+#AddNewPerson .btn,
 #yesButton,
 #noButton {
     border-radius: 12px;
@@ -307,11 +316,11 @@ ul {
     font-size: 15px;
 }
 
-#AddnewGroup .float-right:hover,
-#AddNewPerson .float-right:hover,
+#AddnewGroup .btn:hover,
+#AddNewPerson .btn:hover,
 #yesButton:hover,
 #noButton:hover,
-.new-message .float-right:hover {
+.new-message .btn:hover {
     background-color: black;
     color: white;
 }
@@ -387,7 +396,7 @@ ul {
     margin-left: 10px;
 }
 
-.new-message .float-right {
+.new-message .btn {
     border-radius: 18px;
     padding: 8px;
     border: none;
@@ -395,7 +404,7 @@ ul {
     background-color: transparent;
 }
 
-.new-message .float-right i {
+.new-message .btn i {
     font-size: 20px;
 }
 
@@ -424,8 +433,9 @@ ul {
     background: #555;
 }
 
-#notifications-btn.red,#requests-btn.red {
-    color:#e6005c;
+#notifications-btn.red,
+#requests-btn.red {
+    color: #e6005c;
 }
 
 @media only screen and (max-device-width: 667px),
@@ -433,7 +443,7 @@ screen and (max-width: 450px) {
 
     body,
     main {
-        height: 100vh;
+        height: 100%;
     }
 
     main .sendMessage {
