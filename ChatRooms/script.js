@@ -35,12 +35,7 @@ const requestsUL = document.getElementById("requests-ul");
 const notificationsUL = document.getElementById("notificationLists-ul");
 const submitEditedMessage = document.getElementById("submit-edit-message");
 
-var firstLogIn = true;
-
-if (firstLogIn) {
-    updateChat();
-    firstLogIn = false;
-}
+updateChat();
 
 get(child(dbRef, "users/" + window.localStorage.getItem("username")))
     .then((snapshot) => {
